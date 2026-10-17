@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkyRush</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d1b;color:#fff;font-family:Arial,sans-serif;text-align:center}
+header{padding:20px;color:#53f5d0;font-size:28px;font-weight:900}
+main{max-width:500px;margin:auto;padding:12px}
+#arena{height:280px;background:radial-gradient(ellipse at bottom,#172d54,#080d1b 70%);border:1px solid #26395a;border-radius:18px;position:relative;overflow:hidden}
+#mult{font-size:46px;font-weight:bold;margin-top:70px;color:#53f5d0}
+#rocket{font-size:45px;position:absolute;bottom:20px;left:20px;transition:all .2s}
+#status{color:#b4c2dd;margin:12px}
+.panel{background:#121a2d;border-radius:16px;padding:18px;margin-top:14px}
+input,button{width:100%;padding:14px;border-radius:10px;border:0;font-size:16px;margin-top:10px}
+input{background:#080d1b;color:white;border:1px solid #354363}
+button{background:#53f5d0;color:#07111b;font-weight:bold}
+button:disabled{opacity:.5}
+#cash{background:#ffca65}
+.small{color:#a7b5ce;font-size:13px}
+</style>
+</head>
+<body>
+<header>🚀 SKYRUSH</header>
+<main>
+<div id="arena">
+<div id="mult">1.00x</div>
+<div id="rocket">🚀</div>
+</div>
+<div id="status">Ready for takeoff?</div>
+<div class="panel">
+<p>Virtual balance: <strong id="balance">1000</strong> credits</p>
+<label for="stake">Virtual bet amount</label>
+<input id="stake" type="number" value="50" min="1" step="1">
+<button id="start" onclick="startGame()">LAUNCH GAME</button>
+<button id="cash" onclick="cashOut()" disabled>CASH OUT</button>
+<p class="small">Demo only • No real money • No cash withdrawals</p>
+</div>
+</main>
+<script>
+let balance=1000,playing=false,cashed=false,mult=1,timer=null,stake=50;
+const $=id=>document.getElementById(id);
+function update(){ $('balance').textContent=balance.toFixed(0); }
+function startGame(){
+ if(playing)return;
+ stake=Number($('stake').value);
+ if(!Number.isFinite(stake)||stake<1||stake>balance){$('status').textContent='Enter a valid bet within your balance.';return;}
+ balance-=stake;update();playing=true;cashed=false;mult=1;
+ $('mult').textContent='1.00x';$('rocket').style.left='20px';$('rocket').style.bottom='20px';
+ $('status').textContent='Rocket ascending!';$('start').disabled=true;$('cash').disabled=false;
+ const crashAt=1.2+Math.random()*4.8;
+ const began=Date.now();
+ timer=setInterval(()=>{
+  mult=Math.exp((Date.now()-began)/5000);
+  $('mult').textContent=mult.toFixed(2)+'x';
+  $('rocket').style.left=Math.min(78,20+(mult-1)*13)+'%';
+  $('rocket').style.bottom=Math.min(200,20+(mult-1)*38)+'px';
+  if(mult>=crashAt){
+   clearInterval(timer);playing=false;
+   $('mult').textContent='CRASH!';$('mult').style.color='#ff657a';
+   $('status').textContent=cashed?'You cashed out earlier!':'Round over. Try another demo round.';
+   $('cash').disabled=true;$('start').disabled=false;
+   $('mult').style.color='#53f5d0';
+  }
+ },100);
+}
+function cashOut(){
+ if(!playing||cashed)return;
+ cashed=true;playing=false;clearInterval(timer);
+ balance+=stake*mult;update();
+ $('status').textContent='Cashed out at '+mult.toFixed(2)+'x • Demo winnings: '+(stake*mult).toFixed(0);
+ $('cash').disabled=true;$('start').disabled=false;
+}
+</script>
+</body>
+</html>
