@@ -3,77 +3,362 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SkyRush</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>SkyRush | Rise Above</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080d1b;color:#fff;font-family:Arial,sans-serif;text-align:center}
-header{padding:20px;color:#53f5d0;font-size:28px;font-weight:900}
-main{max-width:500px;margin:auto;padding:12px}
-#arena{height:280px;background:radial-gradient(ellipse at bottom,#172d54,#080d1b 70%);border:1px solid #26395a;border-radius:18px;position:relative;overflow:hidden}
-#mult{font-size:46px;font-weight:bold;margin-top:70px;color:#53f5d0}
-#rocket{font-size:45px;position:absolute;bottom:20px;left:20px;transition:all .2s}
-#status{color:#b4c2dd;margin:12px}
-.panel{background:#121a2d;border-radius:16px;padding:18px;margin-top:14px}
-input,button{width:100%;padding:14px;border-radius:10px;border:0;font-size:16px;margin-top:10px}
-input{background:#080d1b;color:white;border:1px solid #354363}
-button{background:#53f5d0;color:#07111b;font-weight:bold}
-button:disabled{opacity:.5}
-#cash{background:#ffca65}
-.small{color:#a7b5ce;font-size:13px}
+:root {
+  --gold: #f5c451;
+  --dark: #080808;
+  --panel: #141414;
+  --muted: #999;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--dark);
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 16px;
+  border-bottom: 1px solid #302715;
+}
+.brand {
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.brand span { color: white; }
+.demo {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+main {
+  width: min(100% - 24px, 480px);
+  margin: 22px auto;
+}
+.balance {
+  background: linear-gradient(120deg,#201b0d,#111);
+  border: 1px solid #57451e;
+  padding: 18px;
+  border-radius: 15px;
+  text-align: center;
+}
+.label {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+.amount {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--gold);
+  margin: 8px;
+}
+.game {
+  position: relative;
+  overflow: hidden;
+  margin-top: 16px;
+  height: 290px;
+  border: 1px solid #3b3018;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at bottom,#32230d 0%,#17120b 30%,#090909 75%);
+}
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: .6;
+  background-image:
+    radial-gradient(white 1px,transparent 1.5px),
+    radial-gradient(#f5c451 1px,transparent 1.5px);
+  background-size: 49px 49px,83px 83px;
+  background-position: 0 0,25px 18px;
+}
+.multiplier {
+  position: absolute;
+  top: 28px;
+  width: 100%;
+  text-align: center;
+  font-size: 47px;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 20px #c68b1c66;
+}
+.status {
+  position: absolute;
+  top: 84px;
+  width: 100%;
+  text-align: center;
+  color: #aaa;
+  font-size: 12px;
+}
+.rocket {
+  position: absolute;
+  left: 18%;
+  bottom: 34px;
+  font-size: 45px;
+  transform: rotate(-35deg);
+  filter: drop-shadow(0 0 12px #f5c45188);
+}
+.game.running .rocket {
+  animation: fly 4s ease-in-out forwards;
+}
+@keyframes fly {
+  0% { left: 18%; bottom: 34px; }
+  50% { left: 47%; bottom: 95px; }
+  100% { left: 75%; bottom: 180px; }
+}
+.controls {
+  background: var(--panel);
+  padding: 17px;
+  border: 1px solid #292929;
+  border-radius: 15px;
+  margin-top: 14px;
+}
+label {
+  display: block;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+input {
+  width: 100%;
+  background: #080808;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  padding: 13px;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+button {
+  border: 0;
+  padding: 14px 8px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.primary {
+  background: linear-gradient(135deg,#ffe39a,#d9a52f);
+  color: #171006;
+}
+.secondary {
+  background: #292929;
+  color: #fff;
+  border: 1px solid #555;
+}
+button:disabled { opacity: .45; }
+.message {
+  min-height: 38px;
+  text-align: center;
+  color: var(--gold);
+  font-size: 13px;
+  line-height: 1.5;
+  padding-top: 14px;
+}
+.history {
+  margin-top: 15px;
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 15px;
+}
+.history h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--gold);
+}
+#historyList {
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.9;
+}
+footer {
+  color: #777;
+  text-align: center;
+  padding: 25px 12px;
+  font-size: 11px;
+  line-height: 1.7;
+}
 </style>
 </head>
 <body>
-<header>🚀 SKYRUSH</header>
+<header>
+  <div class="brand">🚀 SKY<span>RUSH</span></div>
+  <div class="demo">DEMO MODE</div>
+</header>
+
 <main>
-<div id="arena">
-<div id="mult">1.00x</div>
-<div id="rocket">🚀</div>
-</div>
-<div id="status">Ready for takeoff?</div>
-<div class="panel">
-<p>Virtual balance: <strong id="balance">1000</strong> credits</p>
-<label for="stake">Virtual bet amount</label>
-<input id="stake" type="number" value="50" min="1" step="1">
-<button id="start" onclick="startGame()">LAUNCH GAME</button>
-<button id="cash" onclick="cashOut()" disabled>CASH OUT</button>
-<p class="small">Demo only • No real money • No cash withdrawals</p>
-</div>
+  <section class="balance">
+    <div class="label">VIRTUAL DEMO BALANCE</div>
+    <div class="amount" id="balance">KSh 10,000</div>
+    <div class="label">Practice credits only · No cash value</div>
+  </section>
+
+  <section class="game" id="game">
+    <div class="stars"></div>
+    <div class="multiplier" id="multiplier">1.00x</div>
+    <div class="status" id="status">READY FOR TAKEOFF</div>
+    <div class="rocket" id="rocket">🚀</div>
+  </section>
+
+  <section class="controls">
+    <label for="stake">PRACTICE STAKE (VIRTUAL KSh)</label>
+    <input id="stake" type="number" min="10" step="10"
+      value="100" inputmode="numeric">
+
+    <div class="buttons">
+      <button class="primary" id="start">🚀 START DEMO</button>
+      <button class="secondary" id="cashout" disabled>
+        COLLECT DEMO WIN
+      </button>
+    </div>
+    <div class="message" id="message">
+      Welcome to SkyRush. Practice with virtual credits.
+    </div>
+  </section>
+
+  <section class="history">
+    <h3>YOUR DEMO HISTORY</h3>
+    <div id="historyList">No rounds played yet.</div>
+  </section>
 </main>
+
+<footer>
+  SKYRUSH · RISE ABOVE<br>
+  Educational entertainment prototype.<br>
+  All balances and results are simulated. No real-money betting,
+  deposits, withdrawals or prizes.
+</footer>
+
 <script>
-let balance=1000,playing=false,cashed=false,mult=1,timer=null,stake=50;
-const $=id=>document.getElementById(id);
-function update(){ $('balance').textContent=balance.toFixed(0); }
-function startGame(){
- if(playing)return;
- stake=Number($('stake').value);
- if(!Number.isFinite(stake)||stake<1||stake>balance){$('status').textContent='Enter a valid bet within your balance.';return;}
- balance-=stake;update();playing=true;cashed=false;mult=1;
- $('mult').textContent='1.00x';$('rocket').style.left='20px';$('rocket').style.bottom='20px';
- $('status').textContent='Rocket ascending!';$('start').disabled=true;$('cash').disabled=false;
- const crashAt=1.2+Math.random()*4.8;
- const began=Date.now();
- timer=setInterval(()=>{
-  mult=Math.exp((Date.now()-began)/5000);
-  $('mult').textContent=mult.toFixed(2)+'x';
-  $('rocket').style.left=Math.min(78,20+(mult-1)*13)+'%';
-  $('rocket').style.bottom=Math.min(200,20+(mult-1)*38)+'px';
-  if(mult>=crashAt){
-   clearInterval(timer);playing=false;
-   $('mult').textContent='CRASH!';$('mult').style.color='#ff657a';
-   $('status').textContent=cashed?'You cashed out earlier!':'Round over. Try another demo round.';
-   $('cash').disabled=true;$('start').disabled=false;
-   $('mult').style.color='#53f5d0';
+const $ = id => document.getElementById(id);
+
+let balance = 10000;
+let active = false;
+let round = 0;
+let stake = 0;
+let multiplier = 1;
+let timer = null;
+let startTime = 0;
+let crashAt = 0;
+let history = [];
+
+function showBalance() {
+  $("balance").textContent =
+    "KSh " + balance.toLocaleString("en-KE");
+}
+
+function setMessage(message) {
+  $("message").textContent = message;
+}
+
+function addHistory(message) {
+  history.unshift(message);
+  history = history.slice(0, 5);
+  $("historyList").innerHTML = history
+    .map(item => "<div>" + item + "</div>").join("");
+}
+
+function resetDisplay() {
+  $("game").classList.remove("running");
+  $("multiplier").textContent = "1.00x";
+  $("rocket").style.left = "18%";
+  $("rocket").style.bottom = "34px";
+}
+
+function finishRound(won) {
+  if (!active) return;
+  active = false;
+  clearInterval(timer);
+  $("start").disabled = false;
+  $("cashout").disabled = true;
+  $("game").classList.remove("running");
+
+  if (won) {
+    const payout = Math.floor(stake * multiplier);
+    balance += payout;
+    showBalance();
+    $("status").textContent = "DEMO WIN!";
+    setMessage(
+      "Collected KSh " + payout.toLocaleString("en-KE") +
+      " in virtual credits at " + multiplier.toFixed(2) + "x."
+    );
+    addHistory("Round " + round + ": WIN at " +
+      multiplier.toFixed(2) + "x");
+  } else {
+    $("status").textContent = "FLIGHT ENDED";
+    setMessage("Round ended. Virtual stake lost: KSh " +
+      stake.toLocaleString("en-KE") + ".");
+    addHistory("Round " + round + ": ENDED at " +
+      multiplier.toFixed(2) + "x");
   }
- },100);
 }
-function cashOut(){
- if(!playing||cashed)return;
- cashed=true;playing=false;clearInterval(timer);
- balance+=stake*mult;update();
- $('status').textContent='Cashed out at '+mult.toFixed(2)+'x • Demo winnings: '+(stake*mult).toFixed(0);
- $('cash').disabled=true;$('start').disabled=false;
-}
+
+$("start").addEventListener("click", () => {
+  if (active) return;
+
+  const value = Number($("stake").value);
+  if (!Number.isFinite(value) || value < 10 ||
+      !Number.isInteger(value)) {
+    setMessage("Enter a whole-number stake of at least KSh 10.");
+    return;
+  }
+  if (value > balance) {
+    setMessage("Not enough virtual credits. Reset the demo page to restart.");
+    return;
+  }
+
+  stake = value;
+  balance -= stake;
+  showBalance();
+  active = true;
+  round++;
+  multiplier = 1;
+  startTime = Date.now();
+
+  // Simulated result for entertainment, not a prediction.
+  crashAt = 1.15 + Math.random() * 3.85;
+
+  $("start").disabled = true;
+  $("cashout").disabled = false;
+  $("status").textContent = "ROCKET IN FLIGHT";
+  $("game").classList.add("running");
+  setMessage("Rocket flying! Collect your virtual payout before the round ends.");
+
+  timer = setInterval(() => {
+    const elapsed = (Date.now() - startTime) / 1000;
+    multiplier = Math.exp(elapsed * 0.20);
+    $("multiplier").textContent = multiplier.toFixed(2) + "x";
+
+    if (multiplier >= crashAt) {
+      multiplier = crashAt;
+      $("multiplier").textContent = multiplier.toFixed(2) + "x";
+      finishRound(false);
+    }
+  }, 100);
+});
+
+$("cashout").addEventListener("click", () => {
+  if (active) finishRound(true);
+});
+
+showBalance();
 </script>
 </body>
 </html>
