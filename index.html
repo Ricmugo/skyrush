@@ -3,48 +3,103 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080808">
 <title>SkyRush | Rise Above</title>
 <style>
 :root {
   --gold: #f5c451;
-  --dark: #080808;
+  --black: #080808;
   --panel: #141414;
-  --muted: #999;
+  --muted: #aaa;
 }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--dark);
+  background: var(--black);
   color: #fff;
   font-family: Arial, sans-serif;
 }
+a { color: inherit; text-decoration: none; }
 header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(8,8,8,.97);
+  border-bottom: 1px solid #49391a;
+}
+.navbar {
+  max-width: 1100px;
+  min-height: 72px;
+  margin: auto;
+  padding: 12px 18px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 18px 16px;
-  border-bottom: 1px solid #302715;
+  justify-content: space-between;
+  gap: 14px;
 }
 .brand {
   color: var(--gold);
   font-size: 22px;
   font-weight: 900;
   letter-spacing: 2px;
+  white-space: nowrap;
 }
 .brand span { color: white; }
-.demo {
-  border: 1px solid var(--gold);
+.brand small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #aaa;
+  margin-top: 4px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 13px;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links .nav-play {
+  background: var(--gold);
+  color: #171006;
+  padding: 11px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.menu-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid #57451e;
   color: var(--gold);
-  padding: 6px 9px;
-  border-radius: 20px;
-  font-size: 10px;
-  letter-spacing: 1px;
+  font-size: 24px;
+  padding: 4px 11px;
 }
 main {
-  width: min(100% - 24px, 480px);
-  margin: 22px auto;
+  width: min(100% - 24px, 760px);
+  margin: 24px auto;
+}
+.hero {
+  text-align: center;
+  padding: 26px 10px 18px;
+}
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 11px;
+}
+h1 {
+  font-size: clamp(34px,8vw,54px);
+  margin: 12px 0;
+  letter-spacing: -1px;
+}
+h1 span { color: var(--gold); }
+.hero p {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 14px;
 }
 .balance {
   background: linear-gradient(120deg,#201b0d,#111);
@@ -56,7 +111,7 @@ main {
 .label {
   color: var(--muted);
   font-size: 12px;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
 }
 .amount {
   font-size: 34px;
@@ -71,8 +126,7 @@ main {
   height: 290px;
   border: 1px solid #3b3018;
   border-radius: 16px;
-  background:
-    radial-gradient(ellipse at bottom,#32230d 0%,#17120b 30%,#090909 75%);
+  background: radial-gradient(ellipse at bottom,#32230d,#090909 75%);
 }
 .stars {
   position: absolute;
@@ -82,7 +136,6 @@ main {
     radial-gradient(white 1px,transparent 1.5px),
     radial-gradient(#f5c451 1px,transparent 1.5px);
   background-size: 49px 49px,83px 83px;
-  background-position: 0 0,25px 18px;
 }
 .multiplier {
   position: absolute;
@@ -92,7 +145,6 @@ main {
   font-size: 47px;
   font-weight: 900;
   color: var(--gold);
-  text-shadow: 0 0 20px #c68b1c66;
 }
 .status {
   position: absolute;
@@ -111,16 +163,16 @@ main {
   filter: drop-shadow(0 0 12px #f5c45188);
 }
 .game.running .rocket {
-  animation: fly 4s ease-in-out forwards;
+  animation: fly 5s ease-in-out forwards;
 }
 @keyframes fly {
   0% { left: 18%; bottom: 34px; }
   50% { left: 47%; bottom: 95px; }
   100% { left: 75%; bottom: 180px; }
 }
-.controls {
+.controls, .history, .info-card, .contact-card {
   background: var(--panel);
-  padding: 17px;
+  padding: 18px;
   border: 1px solid #292929;
   border-radius: 15px;
   margin-top: 14px;
@@ -128,7 +180,7 @@ main {
 label {
   display: block;
   font-size: 12px;
-  color: #aaa;
+  color: var(--muted);
   margin-bottom: 8px;
 }
 input {
@@ -160,7 +212,7 @@ button {
 }
 .secondary {
   background: #292929;
-  color: #fff;
+  color: white;
   border: 1px solid #555;
 }
 button:disabled { opacity: .45; }
@@ -172,39 +224,86 @@ button:disabled { opacity: .45; }
   line-height: 1.5;
   padding-top: 14px;
 }
-.history {
-  margin-top: 15px;
-  background: var(--panel);
-  border-radius: 12px;
-  padding: 15px;
-}
-.history h3 {
-  margin: 0 0 12px;
-  font-size: 13px;
+h2 {
+  font-size: 23px;
   color: var(--gold);
+  margin: 0 0 12px;
+}
+h3 {
+  color: var(--gold);
+  font-size: 14px;
+}
+.info-card p, .contact-card p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
 }
 #historyList {
-  color: #aaa;
+  color: var(--muted);
   font-size: 12px;
   line-height: 1.9;
 }
 footer {
-  color: #777;
   text-align: center;
-  padding: 25px 12px;
+  padding: 28px 16px;
+  border-top: 1px solid #302715;
+  color: #777;
   font-size: 11px;
-  line-height: 1.7;
+  line-height: 1.9;
+}
+@media(max-width:700px) {
+  .navbar { min-height: 66px; }
+  .menu-btn { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #101010;
+    padding: 12px 18px 18px;
+    border-bottom: 1px solid #49391a;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 14px 8px; }
+  .nav-links .nav-play { text-align: center; margin-top: 5px; }
 }
 </style>
 </head>
 <body>
+
 <header>
-  <div class="brand">🚀 SKY<span>RUSH</span></div>
-  <div class="demo">DEMO MODE</div>
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="brand" href="#home">
+      🚀 SKY<span>RUSH</span>
+      <small>RISE ABOVE</small>
+    </a>
+    <button class="menu-btn" id="menuBtn"
+      aria-label="Open navigation" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-play" href="#play">PLAY DEMO</a>
+    </div>
+  </nav>
 </header>
 
+<section class="hero" id="home">
+  <div class="eyebrow">WELCOME TO SKYRUSH</div>
+  <h1>READY TO <span>RISE?</span></h1>
+  <p>
+    Experience the thrill of the rocket in a virtual demo.
+    Explore the game, practice your timing and enjoy the flight.
+  </p>
+</section>
+
 <main>
-  <section class="balance">
+  <section class="balance" id="play">
     <div class="label">VIRTUAL DEMO BALANCE</div>
     <div class="amount" id="balance">KSh 10,000</div>
     <div class="label">Practice credits only · No cash value</div>
@@ -214,14 +313,13 @@ footer {
     <div class="stars"></div>
     <div class="multiplier" id="multiplier">1.00x</div>
     <div class="status" id="status">READY FOR TAKEOFF</div>
-    <div class="rocket" id="rocket">🚀</div>
+    <div class="rocket">🚀</div>
   </section>
 
   <section class="controls">
     <label for="stake">PRACTICE STAKE (VIRTUAL KSh)</label>
     <input id="stake" type="number" min="10" step="10"
       value="100" inputmode="numeric">
-
     <div class="buttons">
       <button class="primary" id="start">🚀 START DEMO</button>
       <button class="secondary" id="cashout" disabled>
@@ -237,13 +335,45 @@ footer {
     <h3>YOUR DEMO HISTORY</h3>
     <div id="historyList">No rounds played yet.</div>
   </section>
+
+  <section class="info-card" id="how">
+    <h2>How It Works</h2>
+    <p>
+      1. Choose a virtual practice stake.<br>
+      2. Start a demo round and watch the multiplier rise.<br>
+      3. Collect your virtual payout before the simulated crash.<br>
+      4. Review your demo history and practice again.
+    </p>
+    <p>
+      Crash points are simulated randomly in this prototype.
+      They cannot predict the outcome of any real betting game.
+    </p>
+  </section>
+
+  <section class="info-card" id="about">
+    <h2>About SkyRush</h2>
+    <p>
+      SkyRush is an original black-and-gold rocket game prototype
+      built for virtual practice and testing. Our aim is to create
+      a polished, mobile-friendly experience.
+    </p>
+  </section>
+
+  <section class="contact-card" id="contact">
+    <h2>Contact SkyRush</h2>
+    <p>
+      Have feedback or ideas for the SkyRush demo? Contact details
+      will be added here when an official support channel is ready.
+    </p>
+    <p>Official support channel: Coming soon.</p>
+  </section>
 </main>
 
 <footer>
-  SKYRUSH · RISE ABOVE<br>
+  <strong>SKYRUSH · RISE ABOVE</strong><br>
+  Home · Play Demo · How It Works · About · Contact<br>
   Educational entertainment prototype.<br>
-  All balances and results are simulated. No real-money betting,
-  deposits, withdrawals or prizes.
+  No real-money betting, deposits, withdrawals or prizes.
 </footer>
 
 <script>
@@ -259,9 +389,22 @@ let startTime = 0;
 let crashAt = 0;
 let history = [];
 
+$("menuBtn").addEventListener("click", () => {
+  const open = $("navLinks").classList.toggle("open");
+  $("menuBtn").setAttribute("aria-expanded", String(open));
+  $("menuBtn").textContent = open ? "✕" : "☰";
+});
+
+document.querySelectorAll("#navLinks a").forEach(link => {
+  link.addEventListener("click", () => {
+    $("navLinks").classList.remove("open");
+    $("menuBtn").setAttribute("aria-expanded", "false");
+    $("menuBtn").textContent = "☰";
+  });
+});
+
 function showBalance() {
-  $("balance").textContent =
-    "KSh " + balance.toLocaleString("en-KE");
+  $("balance").textContent = "KSh " + balance.toLocaleString("en-KE");
 }
 
 function setMessage(message) {
@@ -270,16 +413,9 @@ function setMessage(message) {
 
 function addHistory(message) {
   history.unshift(message);
-  history = history.slice(0, 5);
+  history = history.slice(0, 8);
   $("historyList").innerHTML = history
     .map(item => "<div>" + item + "</div>").join("");
-}
-
-function resetDisplay() {
-  $("game").classList.remove("running");
-  $("multiplier").textContent = "1.00x";
-  $("rocket").style.left = "18%";
-  $("rocket").style.bottom = "34px";
 }
 
 function finishRound(won) {
@@ -295,17 +431,16 @@ function finishRound(won) {
     balance += payout;
     showBalance();
     $("status").textContent = "DEMO WIN!";
-    setMessage(
-      "Collected KSh " + payout.toLocaleString("en-KE") +
-      " in virtual credits at " + multiplier.toFixed(2) + "x."
-    );
-    addHistory("Round " + round + ": WIN at " +
+    setMessage("Virtual payout: KSh " +
+      payout.toLocaleString("en-KE") +
+      " at " + multiplier.toFixed(2) + "x.");
+    addHistory("Round " + round + ": COLLECTED at " +
       multiplier.toFixed(2) + "x");
   } else {
     $("status").textContent = "FLIGHT ENDED";
     setMessage("Round ended. Virtual stake lost: KSh " +
       stake.toLocaleString("en-KE") + ".");
-    addHistory("Round " + round + ": ENDED at " +
+    addHistory("Round " + round + ": CRASH at " +
       multiplier.toFixed(2) + "x");
   }
 }
@@ -320,7 +455,7 @@ $("start").addEventListener("click", () => {
     return;
   }
   if (value > balance) {
-    setMessage("Not enough virtual credits. Reset the demo page to restart.");
+    setMessage("Insufficient virtual credits. Refresh to reset the demo.");
     return;
   }
 
@@ -332,26 +467,32 @@ $("start").addEventListener("click", () => {
   multiplier = 1;
   startTime = Date.now();
 
-  // Simulated result for entertainment, not a prediction.
-  crashAt = 1.15 + Math.random() * 3.85;
+  // DEMO ONLY: 75% lower-range and 25% upper-range selection.
+  if (Math.random() < 0.75) {
+    crashAt = 1.01 + Math.random() * 0.98;
+  } else {
+    crashAt = 2.00 + Math.random() * 3.00;
+  }
 
   $("start").disabled = true;
   $("cashout").disabled = false;
   $("status").textContent = "ROCKET IN FLIGHT";
   $("game").classList.add("running");
-  setMessage("Rocket flying! Collect your virtual payout before the round ends.");
+  setMessage("Demo round running. Collect virtual credits before the crash.");
 
   timer = setInterval(() => {
     const elapsed = (Date.now() - startTime) / 1000;
     multiplier = Math.exp(elapsed * 0.20);
-    $("multiplier").textContent = multiplier.toFixed(2) + "x";
 
     if (multiplier >= crashAt) {
       multiplier = crashAt;
       $("multiplier").textContent = multiplier.toFixed(2) + "x";
       finishRound(false);
+      return;
     }
-  }, 100);
+
+    $("multiplier").textContent = multiplier.toFixed(2) + "x";
+  }, 50);
 });
 
 $("cashout").addEventListener("click", () => {
