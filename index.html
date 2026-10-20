@@ -8,386 +8,211 @@
 <title>SkyRush | Rise Above</title>
 <style>
 :root {
-  --gold: #f5c451;
-  --black: #080808;
-  --panel: #141414;
-  --muted: #aaa;
+  --gold:#f5c451;
+  --black:#080808;
+  --panel:#141414;
+  --muted:#aaa;
 }
-* { box-sizing: border-box; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--black);
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-a { color: inherit; text-decoration: none; }
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(8,8,8,.97);
-  border-bottom: 1px solid #49391a;
-}
-.navbar {
-  max-width: 1100px;
-  min-height: 72px;
-  margin: auto;
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-.brand {
-  color: var(--gold);
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-.brand span { color: white; }
-.brand small {
-  display: block;
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: #aaa;
-  margin-top: 4px;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  font-size: 13px;
-}
-.nav-links a:hover { color: var(--gold); }
-.nav-links .nav-play {
-  background: var(--gold);
-  color: #171006;
-  padding: 11px 15px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-.menu-btn {
-  display: none;
-  background: transparent;
-  border: 1px solid #57451e;
-  color: var(--gold);
-  font-size: 24px;
-  padding: 4px 11px;
-}
-main {
-  width: min(100% - 24px, 760px);
-  margin: 24px auto;
-}
-.hero {
-  text-align: center;
-  padding: 26px 10px 18px;
-}
-.eyebrow {
-  color: var(--gold);
-  letter-spacing: 3px;
-  font-size: 11px;
-}
-h1 {
-  font-size: clamp(34px,8vw,54px);
-  margin: 12px 0;
-  letter-spacing: -1px;
-}
-h1 span { color: var(--gold); }
-.hero p {
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 500px;
-  margin: 0 auto;
-  font-size: 14px;
-}
-.balance {
-  background: linear-gradient(120deg,#201b0d,#111);
-  border: 1px solid #57451e;
-  padding: 18px;
-  border-radius: 15px;
-  text-align: center;
-}
-.label {
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-.amount {
-  font-size: 34px;
-  font-weight: 800;
-  color: var(--gold);
-  margin: 8px;
-}
-.game {
-  position: relative;
-  overflow: hidden;
-  margin-top: 16px;
-  height: 290px;
-  border: 1px solid #3b3018;
-  border-radius: 16px;
-  background: radial-gradient(ellipse at bottom,#32230d,#090909 75%);
-}
-.stars {
-  position: absolute;
-  inset: 0;
-  opacity: .6;
-  background-image:
-    radial-gradient(white 1px,transparent 1.5px),
-    radial-gradient(#f5c451 1px,transparent 1.5px);
-  background-size: 49px 49px,83px 83px;
-}
-.multiplier {
-  position: absolute;
-  top: 28px;
-  width: 100%;
-  text-align: center;
-  font-size: 47px;
-  font-weight: 900;
-  color: var(--gold);
-}
-.status {
-  position: absolute;
-  top: 84px;
-  width: 100%;
-  text-align: center;
-  color: #aaa;
-  font-size: 12px;
-}
-.rocket {
-  position: absolute;
-  left: 18%;
-  bottom: 34px;
-  font-size: 45px;
-  transform: rotate(-35deg);
-  filter: drop-shadow(0 0 12px #f5c45188);
-}
-.game.running .rocket {
-  animation: fly 5s ease-in-out forwards;
-}
-@keyframes fly {
-  0% { left: 18%; bottom: 34px; }
-  50% { left: 47%; bottom: 95px; }
-  100% { left: 75%; bottom: 180px; }
-}
-.controls, .history, .info-card, .contact-card {
-  background: var(--panel);
-  padding: 18px;
-  border: 1px solid #292929;
-  border-radius: 15px;
-  margin-top: 14px;
-}
-label {
-  display: block;
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-input {
-  width: 100%;
-  background: #080808;
-  border: 1px solid #444;
-  border-radius: 8px;
-  color: white;
-  padding: 13px;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-.buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-button {
-  border: 0;
-  padding: 14px 8px;
-  border-radius: 9px;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.primary {
-  background: linear-gradient(135deg,#ffe39a,#d9a52f);
-  color: #171006;
-}
-.secondary {
-  background: #292929;
-  color: white;
-  border: 1px solid #555;
-}
-button:disabled { opacity: .45; }
-.message {
-  min-height: 38px;
-  text-align: center;
-  color: var(--gold);
-  font-size: 13px;
-  line-height: 1.5;
-  padding-top: 14px;
-}
-h2 {
-  font-size: 23px;
-  color: var(--gold);
-  margin: 0 0 12px;
-}
-h3 {
-  color: var(--gold);
-  font-size: 14px;
-}
-.info-card p, .contact-card p {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 14px;
-}
-#historyList {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.9;
-}
-footer {
-  text-align: center;
-  padding: 28px 16px;
-  border-top: 1px solid #302715;
-  color: #777;
-  font-size: 11px;
-  line-height: 1.9;
-}
-@media(max-width:700px) {
-  .navbar { min-height: 66px; }
-  .menu-btn { display: block; }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #101010;
-    padding: 12px 18px 18px;
-    border-bottom: 1px solid #49391a;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links a { padding: 14px 8px; }
-  .nav-links .nav-play { text-align: center; margin-top: 5px; }
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:#fff;font-family:Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:10;background:#080808;border-bottom:1px solid #49391a}
+.navbar{max-width:1100px;min-height:70px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{color:var(--gold);font-size:22px;font-weight:900;letter-spacing:2px}
+.brand span{color:#fff}
+.brand small{display:block;font-size:9px;letter-spacing:3px;color:#aaa;margin-top:4px}
+.nav-links{display:flex;align-items:center;gap:20px;font-size:13px}
+.nav-links a:hover{color:var(--gold)}
+.nav-play{background:var(--gold);color:#171006!important;padding:11px 14px;border-radius:8px;font-weight:bold}
+.menu-btn{display:none;background:#111;border:1px solid #57451e;color:var(--gold);font-size:23px;padding:5px 11px}
+main{width:min(100% - 24px,760px);margin:20px auto}
+.hero{text-align:center;padding:24px 8px}
+.eyebrow{color:var(--gold);letter-spacing:3px;font-size:11px}
+h1{font-size:clamp(34px,8vw,52px);margin:12px 0}
+h1 span{color:var(--gold)}
+.hero p,.muted{color:var(--muted);line-height:1.7;font-size:13px}
+.hero p{max-width:500px;margin:auto}
+.card{background:var(--panel);padding:17px;border:1px solid #292929;border-radius:15px;margin-top:14px}
+.balance{background:linear-gradient(120deg,#201b0d,#111);border-color:#57451e;text-align:center}
+.label{color:var(--muted);font-size:11px;letter-spacing:1px}
+.amount{font-size:32px;font-weight:800;color:var(--gold);margin:8px}
+.game{position:relative;overflow:hidden;height:280px;border:1px solid #3b3018;border-radius:16px;margin-top:14px;background:radial-gradient(ellipse at bottom,#32230d,#090909 75%)}
+.stars{position:absolute;inset:0;opacity:.6;background-image:radial-gradient(white 1px,transparent 1.5px),radial-gradient(#f5c451 1px,transparent 1.5px);background-size:49px 49px,83px 83px}
+.multiplier{position:absolute;top:25px;width:100%;text-align:center;font-size:46px;font-weight:900;color:var(--gold)}
+.status{position:absolute;top:80px;width:100%;text-align:center;color:#aaa;font-size:12px}
+.rocket{position:absolute;left:18%;bottom:32px;font-size:44px;transform:rotate(-35deg);filter:drop-shadow(0 0 12px #f5c45188)}
+.game.running .rocket{animation:fly 5s ease-in-out forwards}
+@keyframes fly{0%{left:18%;bottom:32px}50%{left:47%;bottom:90px}100%{left:75%;bottom:175px}}
+label{display:block;font-size:12px;color:#aaa;margin-bottom:8px}
+input{width:100%;background:#080808;border:1px solid #444;border-radius:8px;color:#fff;padding:13px;font-size:16px;margin-bottom:14px}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;padding:13px 8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer}
+.primary{background:linear-gradient(135deg,#ffe39a,#d9a52f);color:#171006}
+.secondary{background:#292929;color:#fff;border:1px solid #555}
+button:disabled{opacity:.4}
+.message{text-align:center;color:var(--gold);font-size:12px;line-height:1.6;padding-top:13px;min-height:34px}
+h2{font-size:20px;color:var(--gold);margin:0 0 14px}
+h3{font-size:13px;color:var(--gold);margin:0 0 12px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:#0b0b0b;border:1px solid #292929;border-radius:10px;padding:13px}
+.stat span{display:block;color:#aaa;font-size:11px;margin-bottom:8px}
+.stat strong{font-size:23px;color:var(--gold)}
+.bar{height:9px;background:#303030;border-radius:10px;overflow:hidden;margin:12px 0}
+.bar-fill{height:100%;width:0;background:var(--gold);transition:width .2s}
+.reward-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #292929}
+.reward-row:last-child{border-bottom:0}
+.reward-icon{font-size:25px}
+.reward-info{flex:1}
+.reward-info strong{font-size:13px}
+.reward-info small{display:block;color:#aaa;margin-top:5px;font-size:11px}
+.reward-points{color:var(--gold);font-weight:bold;white-space:nowrap}
+.pill{display:inline-block;border:1px solid #57451e;color:var(--gold);border-radius:20px;padding:5px 8px;font-size:10px}
+#historyList{font-size:12px;color:#aaa;line-height:2;overflow-wrap:anywhere}
+footer{text-align:center;padding:25px 14px;border-top:1px solid #302715;color:#777;font-size:11px;line-height:1.9}
+@media(max-width:700px){
+.menu-btn{display:block}
+.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#101010;padding:12px 18px 18px;border-bottom:1px solid #49391a;flex-direction:column;align-items:stretch;gap:0}
+.nav-links.open{display:flex}
+.nav-links a{padding:14px 8px}
+.nav-links .nav-play{text-align:center;margin-top:5px}
 }
 </style>
 </head>
 <body>
-
 <header>
-  <nav class="navbar" aria-label="Main navigation">
-    <a class="brand" href="#home">
-      🚀 SKY<span>RUSH</span>
-      <small>RISE ABOVE</small>
-    </a>
-    <button class="menu-btn" id="menuBtn"
-      aria-label="Open navigation" aria-expanded="false">☰</button>
-    <div class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#how">How It Works</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a class="nav-play" href="#play">PLAY DEMO</a>
-    </div>
-  </nav>
+<nav class="navbar" aria-label="Main navigation">
+<a class="brand" href="#home">🚀 SKY<span>RUSH</span><small>RISE ABOVE</small></a>
+<button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+<div class="nav-links" id="navLinks">
+<a href="#home">Home</a>
+<a href="#how">How It Works</a>
+<a href="#rewards">Rewards</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+<a class="nav-play" href="#play">PLAY DEMO</a>
+</div>
+</nav>
 </header>
 
 <section class="hero" id="home">
-  <div class="eyebrow">WELCOME TO SKYRUSH</div>
-  <h1>READY TO <span>RISE?</span></h1>
-  <p>
-    Experience the thrill of the rocket in a virtual demo.
-    Explore the game, practice your timing and enjoy the flight.
-  </p>
+<div class="eyebrow">WELCOME TO SKYRUSH</div>
+<h1>READY TO <span>RISE?</span></h1>
+<p>Experience the rocket in a virtual demo. Practice your timing, earn SkyPoints and track your results.</p>
 </section>
 
 <main>
-  <section class="balance" id="play">
-    <div class="label">VIRTUAL DEMO BALANCE</div>
-    <div class="amount" id="balance">KSh 10,000</div>
-    <div class="label">Practice credits only · No cash value</div>
-  </section>
+<section class="card balance" id="play">
+<div class="label">VIRTUAL DEMO BALANCE</div>
+<div class="amount" id="balance">KSh 10,000</div>
+<div class="label">Practice credits only · No cash value</div>
+</section>
 
-  <section class="game" id="game">
-    <div class="stars"></div>
-    <div class="multiplier" id="multiplier">1.00x</div>
-    <div class="status" id="status">READY FOR TAKEOFF</div>
-    <div class="rocket">🚀</div>
-  </section>
+<section class="game" id="game">
+<div class="stars"></div>
+<div class="multiplier" id="multiplier">1.00x</div>
+<div class="status" id="status">READY FOR TAKEOFF</div>
+<div class="rocket">🚀</div>
+</section>
 
-  <section class="controls">
-    <label for="stake">PRACTICE STAKE (VIRTUAL KSh)</label>
-    <input id="stake" type="number" min="10" step="10"
-      value="100" inputmode="numeric">
-    <div class="buttons">
-      <button class="primary" id="start">🚀 START DEMO</button>
-      <button class="secondary" id="cashout" disabled>
-        COLLECT DEMO WIN
-      </button>
-    </div>
-    <div class="message" id="message">
-      Welcome to SkyRush. Practice with virtual credits.
-    </div>
-  </section>
+<section class="card">
+<label for="stake">PRACTICE STAKE (VIRTUAL KSh)</label>
+<input id="stake" type="number" min="10" step="10" value="100" inputmode="numeric">
+<div class="buttons">
+<button class="primary" id="start">🚀 START DEMO</button>
+<button class="secondary" id="cashout" disabled>COLLECT DEMO WIN</button>
+</div>
+<div class="message" id="message">Start a round to earn SkyPoints.</div>
+</section>
 
-  <section class="history">
-    <h3>YOUR DEMO HISTORY</h3>
-    <div id="historyList">No rounds played yet.</div>
-  </section>
+<section class="card">
+<h2>🏆 SkyPoints Wallet</h2>
+<div class="stats">
+<div class="stat"><span>YOUR POINTS</span><strong id="points">0 SP</strong></div>
+<div class="stat"><span>ROUNDS PLAYED</span><strong id="rounds">0</strong></div>
+<div class="stat"><span>ROUNDS COLLECTED</span><strong id="wins">0</strong></div>
+<div class="stat"><span>BEST MULTIPLIER</span><strong id="best">0.00x</strong></div>
+</div>
+<p class="muted">Earn 10 SP per completed round, plus 5 SP when you collect a virtual payout. Every 10 rounds earns a 50 SP milestone bonus. Points are virtual and have no cash value.</p>
+</section>
 
-  <section class="info-card" id="how">
-    <h2>How It Works</h2>
-    <p>
-      1. Choose a virtual practice stake.<br>
-      2. Start a demo round and watch the multiplier rise.<br>
-      3. Collect your virtual payout before the simulated crash.<br>
-      4. Review your demo history and practice again.
-    </p>
-    <p>
-      Crash points are simulated randomly in this prototype.
-      They cannot predict the outcome of any real betting game.
-    </p>
-  </section>
+<section class="card">
+<h2>📊 Demo Statistics</h2>
+<div class="stats">
+<div class="stat"><span>CRASH BELOW 2.00x</span><strong id="lowCount">0</strong></div>
+<div class="stat"><span>CRASH AT/ABOVE 2.00x</span><strong id="highCount">0</strong></div>
+<div class="stat"><span>OBSERVED BELOW 2x</span><strong id="lowRate">—</strong></div>
+<div class="stat"><span>OBSERVED 2x OR MORE</span><strong id="highRate">—</strong></div>
+</div>
+<div class="bar"><div class="bar-fill" id="lowBar"></div></div>
+<p class="muted" id="statsNote">No completed rounds yet. Target distribution: 75% lower range, 25% upper range over many rounds.</p>
+</section>
 
-  <section class="info-card" id="about">
-    <h2>About SkyRush</h2>
-    <p>
-      SkyRush is an original black-and-gold rocket game prototype
-      built for virtual practice and testing. Our aim is to create
-      a polished, mobile-friendly experience.
-    </p>
-  </section>
+<section class="card" id="rewards">
+<h2>🎁 Rewards & Achievements</h2>
+<div class="reward-row">
+<div class="reward-icon">🚀</div>
+<div class="reward-info"><strong>First Flight</strong><small>Complete your first round</small></div>
+<div class="reward-points" id="firstBadge">+10 SP</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🎯</div>
+<div class="reward-info"><strong>Regular Pilot</strong><small>Complete 10 rounds</small></div>
+<div class="reward-points" id="tenBadge">+50 SP</div>
+</div>
+<div class="reward-row">
+<div class="reward-icon">🏅</div>
+<div class="reward-info"><strong>Sky Collector</strong><small>Collect 5 virtual payouts</small></div>
+<div class="reward-points" id="collectorBadge">Locked</div>
+</div>
+<p class="muted">Achievements are earned once per page session. No real-world prizes or withdrawals are available.</p>
+<button class="secondary" id="reset">RESET DEMO SESSION</button>
+</section>
 
-  <section class="contact-card" id="contact">
-    <h2>Contact SkyRush</h2>
-    <p>
-      Have feedback or ideas for the SkyRush demo? Contact details
-      will be added here when an official support channel is ready.
-    </p>
-    <p>Official support channel: Coming soon.</p>
-  </section>
+<section class="card" id="how">
+<h2>How It Works</h2>
+<p class="muted">1. Choose a virtual stake. 2. Start a round and watch the multiplier rise. 3. Collect a virtual payout before the simulated crash. 4. Earn points and review your statistics.</p>
+<p class="muted">Crash outcomes are generated in this browser for demo purposes. They do not predict another game or guarantee a particular number of results in each batch.</p>
+</section>
+
+<section class="card" id="about">
+<h2>About SkyRush</h2>
+<p class="muted">SkyRush is a black-and-gold rocket game prototype built for virtual practice, design testing and gameplay experimentation.</p>
+</section>
+
+<section class="card" id="contact">
+<h2>Contact SkyRush</h2>
+<p class="muted">Questions and suggestions are welcome once an official support channel is configured. Official contact details: coming soon.</p>
+</section>
 </main>
 
 <footer>
-  <strong>SKYRUSH · RISE ABOVE</strong><br>
-  Home · Play Demo · How It Works · About · Contact<br>
-  Educational entertainment prototype.<br>
-  No real-money betting, deposits, withdrawals or prizes.
+<strong>SKYRUSH · RISE ABOVE</strong><br>
+Home · Play Demo · Rewards · About · Contact<br>
+Virtual entertainment prototype only.<br>
+No real-money betting, deposits, withdrawals or prizes.
 </footer>
 
 <script>
 const $ = id => document.getElementById(id);
 
-let balance = 10000;
+const INITIAL_BALANCE = 10000;
+let balance = INITIAL_BALANCE;
+let points = 0;
 let active = false;
 let round = 0;
+let wins = 0;
+let lowCount = 0;
+let highCount = 0;
+let best = 0;
 let stake = 0;
 let multiplier = 1;
+let crashAt = 0;
 let timer = null;
 let startTime = 0;
-let crashAt = 0;
 let history = [];
+let firstBonus = false;
+let tenBonus = false;
+let collectorBonus = false;
 
 $("menuBtn").addEventListener("click", () => {
   const open = $("navLinks").classList.toggle("open");
@@ -407,18 +232,34 @@ function showBalance() {
   $("balance").textContent = "KSh " + balance.toLocaleString("en-KE");
 }
 
-function setMessage(message) {
-  $("message").textContent = message;
+function addPoints(amount, reason) {
+  points += amount;
+  $("points").textContent = points.toLocaleString() + " SP";
+  $("message").textContent = reason + " (+" + amount + " SP)";
 }
 
-function addHistory(message) {
-  history.unshift(message);
+function updateStats() {
+  const total = lowCount + highCount;
+  $("rounds").textContent = round;
+  $("wins").textContent = wins;
+  $("best").textContent = best.toFixed(2) + "x";
+  $("lowCount").textContent = lowCount;
+  $("highCount").textContent = highCount;
+  $("lowRate").textContent = total ? (lowCount / total * 100).toFixed(1) + "%" : "—";
+  $("highRate").textContent = total ? (highCount / total * 100).toFixed(1) + "%" : "—";
+  $("lowBar").style.width = total ? (lowCount / total * 100) + "%" : "0%";
+  $("statsNote").textContent = total
+    ? total + " completed rounds. Observed results may differ from the 75%/25% target, especially in small samples."
+    : "No completed rounds yet. Target distribution: 75% lower range, 25% upper range over many rounds.";
+}
+
+function addHistory(text) {
+  history.unshift(text);
   history = history.slice(0, 8);
-  $("historyList").innerHTML = history
-    .map(item => "<div>" + item + "</div>").join("");
+  $("historyList").innerHTML = history.map(item => "<div>" + item + "</div>").join("");
 }
 
-function finishRound(won) {
+function finishRound(collected) {
   if (!active) return;
   active = false;
   clearInterval(timer);
@@ -426,36 +267,58 @@ function finishRound(won) {
   $("cashout").disabled = true;
   $("game").classList.remove("running");
 
-  if (won) {
+  // Count the simulated crash point for the distribution report.
+  if (crashAt < 2) lowCount++;
+  else highCount++;
+
+  if (collected) {
     const payout = Math.floor(stake * multiplier);
     balance += payout;
+    wins++;
+    best = Math.max(best, multiplier);
     showBalance();
     $("status").textContent = "DEMO WIN!";
-    setMessage("Virtual payout: KSh " +
-      payout.toLocaleString("en-KE") +
-      " at " + multiplier.toFixed(2) + "x.");
-    addHistory("Round " + round + ": COLLECTED at " +
-      multiplier.toFixed(2) + "x");
+    addPoints(5, "Virtual payout collected!");
+    addHistory("Round " + round + ": collected at " + multiplier.toFixed(2) + "x");
   } else {
     $("status").textContent = "FLIGHT ENDED";
-    setMessage("Round ended. Virtual stake lost: KSh " +
-      stake.toLocaleString("en-KE") + ".");
-    addHistory("Round " + round + ": CRASH at " +
-      multiplier.toFixed(2) + "x");
+    $("message").textContent = "Round ended. Virtual stake lost: KSh " + stake.toLocaleString("en-KE") + ".";
+    addHistory("Round " + round + ": crash at " + multiplier.toFixed(2) + "x");
   }
+
+  // Each completed round awards 10 SP.
+  addPoints(10, collected ? "Round completed!" : "Round completed!");
+
+  if (!firstBonus) {
+    firstBonus = true;
+    $("firstBadge").textContent = "✓ Earned";
+  }
+
+  if (round >= 10 && !tenBonus) {
+    tenBonus = true;
+    addPoints(50, "10-round milestone!");
+    $("tenBadge").textContent = "✓ Earned";
+  }
+
+  if (wins >= 5 && !collectorBonus) {
+    collectorBonus = true;
+    addPoints(25, "Sky Collector achievement!");
+    $("collectorBadge").textContent = "✓ Earned";
+  }
+
+  updateStats();
 }
 
 $("start").addEventListener("click", () => {
   if (active) return;
 
   const value = Number($("stake").value);
-  if (!Number.isFinite(value) || value < 10 ||
-      !Number.isInteger(value)) {
-    setMessage("Enter a whole-number stake of at least KSh 10.");
+  if (!Number.isInteger(value) || value < 10) {
+    $("message").textContent = "Enter a whole-number stake of at least KSh 10.";
     return;
   }
   if (value > balance) {
-    setMessage("Insufficient virtual credits. Refresh to reset the demo.");
+    $("message").textContent = "Insufficient virtual credits. Reset the demo session to restart.";
     return;
   }
 
@@ -467,7 +330,9 @@ $("start").addEventListener("click", () => {
   multiplier = 1;
   startTime = Date.now();
 
-  // DEMO ONLY: 75% lower-range and 25% upper-range selection.
+  // Demo-only weighted random distribution:
+  // 75% chance of a crash point from 1.01x to below 1.99x.
+  // 25% chance of a crash point from 2.00x to below 5.00x.
   if (Math.random() < 0.75) {
     crashAt = 1.01 + Math.random() * 0.98;
   } else {
@@ -478,7 +343,7 @@ $("start").addEventListener("click", () => {
   $("cashout").disabled = false;
   $("status").textContent = "ROCKET IN FLIGHT";
   $("game").classList.add("running");
-  setMessage("Demo round running. Collect virtual credits before the crash.");
+  $("message").textContent = "Demo round running. Collect virtual credits before the crash.";
 
   timer = setInterval(() => {
     const elapsed = (Date.now() - startTime) / 1000;
@@ -490,7 +355,6 @@ $("start").addEventListener("click", () => {
       finishRound(false);
       return;
     }
-
     $("multiplier").textContent = multiplier.toFixed(2) + "x";
   }, 50);
 });
@@ -499,7 +363,40 @@ $("cashout").addEventListener("click", () => {
   if (active) finishRound(true);
 });
 
+$("reset").addEventListener("click", () => {
+  if (active) {
+    clearInterval(timer);
+    active = false;
+  }
+  balance = INITIAL_BALANCE;
+  points = 0;
+  round = 0;
+  wins = 0;
+  lowCount = 0;
+  highCount = 0;
+  best = 0;
+  history = [];
+  firstBonus = false;
+  tenBonus = false;
+  collectorBonus = false;
+  multiplier = 1;
+  $("start").disabled = false;
+  $("cashout").disabled = true;
+  $("status").textContent = "READY FOR TAKEOFF";
+  $("multiplier").textContent = "1.00x";
+  $("game").classList.remove("running");
+  $("firstBadge").textContent = "+10 SP";
+  $("tenBadge").textContent = "+50 SP";
+  $("collectorBadge").textContent = "Locked";
+  $("historyList").textContent = "No rounds played yet.";
+  $("message").textContent = "Demo session reset.";
+  showBalance();
+  $("points").textContent = "0 SP";
+  updateStats();
+});
+
 showBalance();
+updateStats();
 </script>
 </body>
 </html>
